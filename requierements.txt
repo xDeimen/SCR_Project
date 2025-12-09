@@ -1,1 +1,2 @@
 furhat-realtime-api
+furhat-remote-api
