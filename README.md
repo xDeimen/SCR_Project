@@ -73,3 +73,12 @@ pip install -r requirements.txt
 ## How do i clone this repo?
 Install [git](https://git-scm.com/install/) to your laptop beforehand.
 [Cloning of the repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
+
+## How do i run it?
+
+Use cd into the root of the project and then just run the following command in the terminal, after the .venv is activated.
+
+``` 
+python robot.py 
+```
