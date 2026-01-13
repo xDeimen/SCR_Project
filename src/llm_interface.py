@@ -39,7 +39,14 @@ class LLMInterface:
     
     @property
     def mocked_message(self):
-        return "This is a hardcoded message to not use llm rates"
+        return textwrap.dedent("""
+            This is a hardcoded message to not use llm rates
+            --- User: Hi, I am John. ---
+            Furhat: [SMILE] Hello John, welcome! [NOD] The restrooms are [just down the hall to your right]. Did you need help finding anything else?
+
+            --- User: What was my name? ---
+            Furhat: [SMILE] Your name is John. My memory systems are working perfectly today! [NOD] What else can I help you with?
+        """)
     
     @property
     def system_prompt(self):
@@ -82,7 +89,7 @@ class LLMInterface:
 
             User: "Are you sentient?"
             You: [WINK] That is a philosophical question for a Tuesday morning! I like to think I'm charming, at least.
-            """)
+        """)
     
     @property
     def model_name(self):

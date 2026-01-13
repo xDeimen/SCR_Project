@@ -1,5 +1,4 @@
 import time
-import furhat_remote_api
 from furhat_remote_api import FurhatRemoteAPI
 
 # Furhat Robot IP
