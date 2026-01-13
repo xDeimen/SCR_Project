@@ -1,2 +1,4 @@
 furhat-realtime-api
 furhat-remote-api
+requests
+google-generativeai

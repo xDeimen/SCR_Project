@@ -3,7 +3,7 @@ import furhat_remote_api
 from furhat_remote_api import FurhatRemoteAPI
 
 # Furhat Robot IP
-FURHAT_IP = "10.88.143.249"
+FURHAT_IP = "localhost"
 furhat = FurhatRemoteAPI(FURHAT_IP)
 
 def speak_and_listen():
@@ -43,20 +43,45 @@ def speak_and_listen():
 
 
 def conversation_loop():
-
+    # Get users in the scene and attend to the closest one
+    try:
+        users = furhat.get_users()
+        print(f"Users detected: {users}")
+        
+        if users:
+            # Try to attend to the first/closest user using their ID
+            user_id = users[0].id if hasattr(users[0], 'id') else users[0]
+            furhat.attend(userid=user_id)
+            print(f"Furhat is now attending to user: {user_id}")
+        else:
+            print("No users detected. Furhat will look forward.")
+    except Exception as e:
+        print(f"Error detecting/attending to users: {e}")
+    
     furhat.say(text="Hello! I'm ready to chat. Say 'goodbye' when you want to stop.", blocking=True)
     time.sleep(0.4)
 
     while True:
         print("\nListening for input...")
+        
+        # Update attention to track the user before each interaction
+        try:
+            users = furhat.get_users()
+            if users:
+                user_id = users[0].id if hasattr(users[0], 'id') else users[0]
+                furhat.attend(userid=user_id)
+                print(f"Tracking user: {user_id}")
+        except Exception as e:
+            print(f"Could not update attention: {e}")
+        
         response = furhat.listen()
 
         if response and response.message:
             user_input = response.message.lower()
             print(f"User said: {user_input}")
 
-            if "goodbye" in user_input or "bye" in user_input:
-                furhat.say(text="Goodbye! It was nice talking to you.", blocking=True)
+            if "shut up" in user_input or "bye" in user_input:
+                furhat.say(text="Sorry boss", blocking=True)
                 break
 
             furhat.say(text=f"I heard you say: {user_input}", blocking=True)
@@ -70,5 +95,5 @@ def conversation_loop():
 
 if __name__ == "__main__":
     print("Starting Furhat interaction...")
-    speak_and_listen()
+    conversation_loop()
     print("Furhat interaction completed.")
