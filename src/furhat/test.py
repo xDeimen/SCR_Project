@@ -1,6 +1,6 @@
 from furhat_remote_api  import FurhatRemoteAPI
-from furhat_config import FurhatConfig
-from furhat_gesture_parser import FurhatGestureParser
+from config import FurhatConfig
+from gesture_parser import FurhatGestureParser
 
 
 if __name__ == "__main__":

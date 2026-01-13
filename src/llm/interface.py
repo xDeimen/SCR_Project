@@ -1,6 +1,6 @@
 import google.generativeai as genai
 import textwrap
-from utils.llm_utils import get_gemini_api_key
+from llm.utils import get_gemini_api_key
 
 class LLMInterface:
     def __init__(self, mocked: bool = True, model_name = "", system_prompt=""):
@@ -41,11 +41,6 @@ class LLMInterface:
     def mocked_message(self):
         return textwrap.dedent("""
             This is a hardcoded message to not use llm rates
-            --- User: Hi, I am John. ---
-            Furhat: [SMILE] Hello John, welcome! [NOD] The restrooms are [just down the hall to your right]. Did you need help finding anything else?
-
-            --- User: What was my name? ---
-            Furhat: [SMILE] Your name is John. My memory systems are working perfectly today! [NOD] What else can I help you with?
         """)
     
     @property
@@ -95,17 +90,3 @@ class LLMInterface:
     def model_name(self):
         return "gemini-flash-latest" # Updated to a stable model name
 
-if __name__ == "__main__":
-    # Set mocked=False to test actual history
-    print("Sending request to Gemini...")
-    llm_interface = LLMInterface(mocked=True) 
-    
-    # Turn 1
-    print("\n--- User: Hi, I am John. ---")
-    reply1 = llm_interface.get_response("Hi, I am John. Where is the restroom?")
-    print(f"Furhat: {reply1}")
-
-    # Turn 2 (Testing History)
-    print("\n--- User: What was my name? ---")
-    reply2 = llm_interface.get_response("What was my name?")
-    print(f"Furhat: {reply2}")
