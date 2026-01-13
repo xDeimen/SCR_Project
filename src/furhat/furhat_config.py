@@ -7,29 +7,31 @@ class FurhatConfig:
     Central configuration for the Furhat Robot.
     """
     ip_address: str = "localhost"
-    voice_name: str = "Matthew"       # Options: Matthew, Joanna, Amy, Brian
-    character_name: str = "James"     # Options: James, Patricia, etc.
-    mask_type: str = "Adult"          # Options: Adult, Child
-    
+    voice_name: str = "Matthew"
+    character_name: str = "James"
+    mask_type: str = "Adult"
+    input_language: str = "en-US" 
+
     def apply_to(self, furhat: FurhatRemoteAPI):
         """
-        Applies this configuration to a connected Furhat instance.
+        Applies static settings (Voice/Face) to the robot.
         """
         print(f"⚙️ [CONFIG] Applying settings to Furhat at {self.ip_address}...")
         
         try:
-            # 1. Set Voice
+            # 1. Set Voice (TTS)
             print(f"   -> Setting Voice: {self.voice_name}")
             furhat.set_voice(name=self.voice_name)
             
-            # 2. Set Face/Mask
-            print(f"   -> Setting Face: {self.character_name} ({self.mask_type})")
+            # 2. Set Face (Mask)
+            # This AUTOMATICALLY resets the face to a neutral expression.
+            print(f"   -> Setting Face: {self.character_name}")
             furhat.set_face(character=self.character_name, mask=self.mask_type)
             
-            # 3. Reset State
-            furhat.gesture(name="ExpressNeutral")
+            # REMOVED: furhat.gesture(name="ExpressNeutral") 
+            # This was causing the 400 error because the gesture doesn't exist.
+            
             print("✅ [CONFIG] Setup Complete.")
             
         except Exception as e:
             print(f"❌ [CONFIG] Error applying settings: {e}")
-            print("   (Ensure the robot is online and the voice/face names are valid)")

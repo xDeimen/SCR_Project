@@ -7,8 +7,8 @@ if __name__ == "__main__":
     
     config = FurhatConfig(
         ip_address="localhost",
-        voice_name="Joanna",
-        character_name="Patricia"
+        voice_name="Amy",         # British Voice
+        character_name="Patricia",
     )
 
     furhat = FurhatRemoteAPI(config.ip_address)

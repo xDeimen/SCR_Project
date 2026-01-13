@@ -2,9 +2,6 @@ from enum import Enum
 from furhat_remote_api import FurhatRemoteAPI
 import re
 
-# --- CONFIGURATION ---
-ROBOT_IP = "localhost" 
-
 class FacialExpressions(Enum):
     smile = "[Smile]"
     nod = "[Nod]"
@@ -85,28 +82,3 @@ class FurhatGestureParser:
                     
             except Exception as e:
                 print(f"⚠️ API Error for gesture {gesture}: {e}")
-
-# --- INTEGRATION EXAMPLE ---
-
-if __name__ == "__main__":
-    # 1. Connect
-    try:
-        furhat_connection = FurhatRemoteAPI(ROBOT_IP)
-        print(f"✅ Connected to Furhat at {ROBOT_IP}")
-    except Exception as e:
-        print(f"❌ Could not connect: {e}")
-        furhat_connection = None # Handle offline mode if needed
-
-    if furhat_connection:
-        # 2. Initialize Parser
-        parser = FurhatGestureParser(furhat_connection)
-
-        # 3. Simulate Complex LLM Response
-        llm_output = "[Smile] Welcome! [Nod] It is great to see you. [Concern] Oh wait, looking at the schedule..."
-        print(f"\n--- Processing: '{llm_output}' ---")
-        
-        # 4. EXECUTE SEQUENCE
-        # This function now handles the loop of "Speak -> Gesture -> Speak"
-        parser.parse_sequence_and_perform(llm_output)
-        
-        print("\n✅ Sequence Complete.")
